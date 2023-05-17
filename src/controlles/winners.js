@@ -6,7 +6,7 @@ const getWinners = async (req, res) => {
     await Winner.sync()
     const winners = await Winner.findAll()
     if (winners) {
-      res.status(200).json({ winners })
+      res.status(200).json(winners)
     }
   } catch (error) {
     httpError(error, res)
@@ -18,7 +18,7 @@ const getWinner = async (req, res) => {
     await Winner.sync()
     const winner = await Winner.findOne({ where: { id } })
     if (winner) {
-      res.status(200).json({ winner })
+      res.status(200).json([winner])
     } else {
       res.status(404).json({ message: ERROR_TYPE.notFound })
     }
@@ -28,7 +28,7 @@ const getWinner = async (req, res) => {
 }
 const createWinner = async (req, res) => {
   const { name, time } = req.body
-
+  console.log(name, time)
   try {
     await Winner.sync()
     const winnerCreated = await Winner.create({ name, date: time })
