@@ -1,22 +1,22 @@
-const dotenv = require("dotenv");
-dotenv.config();
+const dotenv = require('dotenv')
+dotenv.config()
 
-const mysql = require("mysql");
-let connection;
+const { Sequelize } = require('sequelize')
 
-try {
-  connection = mysql.createConnection({
-    host: process.env.DBHOST,
-    user: process.env.DBUSER,
-    password: process.env.DBPASS,
-    database: process.env.DBNAME,
-    port: process.env.DBPORT
-  });
-  connection.connect()
+const sequelize = new Sequelize('classmasterbeta', 'camilo', 'kendrys2813', {
+  host: process.env.DBHOST,
+  dialect: 'mysql',
+  port: process.env.DBPORT
+})
 
-
-} catch (error) {
-  console.log("Error al conectar con la base de datos")
+async function testConnection () {
+  try {
+    await sequelize.authenticate()
+    console.log('Connection has been established successfully.')
+  } catch (error) {
+    console.error('Unable to connect to the database:', error)
+  }
 }
+testConnection()
 
-module.exports = { connection }
+module.exports = { sequelize }

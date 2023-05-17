@@ -1,10 +1,9 @@
 
-const {getWinners, createWinner} = require("../controlles/winners");
+const { getWinners, createWinner, getWinner, uptadeWinner, delteWinner } = require('../controlles/winners')
 
-const express = require("express");
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const path = '/api/winners'
-
 
 /**
  * @swagger
@@ -67,7 +66,9 @@ const path = '/api/winners'
  *        description: Error del servidor
  */
 
-
-router.get(`${path}` , getWinners);
-router.post(`${path}` , createWinner);
-module.exports = router;
+router.get(`${path}`, getWinners)
+router.get(`${path}/:id`, getWinner)
+router.post(`${path}`, createWinner)
+router.patch(`${path}/:id`, uptadeWinner)
+router.delete(`${path}/:id`, delteWinner)
+module.exports = router

@@ -1,46 +1,81 @@
-const { connection } = require("../../config/connectDB");
-
+const { ERROR_TYPE } = require('../helpers/dictionary')
+const { httpError } = require('../helpers/httpError')
+const { Winner } = require('../models/winner')
 const getWinners = async (req, res) => {
-    try {
-      const query = "SELECT * FROM winners";
-      
-        connection.query(query, (err, result) => {
-            if (err) {
-                res.status(400).json({ error: err.message });
-            } else {
-                res.status(200).json(result);
-                console.log(result)
-
-            }
-        }   
-        );
-    
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+  try {
+    await Winner.sync()
+    const winners = await Winner.findAll()
+    if (winners) {
+      res.status(200).json({ winners })
     }
-};
+  } catch (error) {
+    httpError(error, res)
+  }
+}
+const getWinner = async (req, res) => {
+  const { id } = req.params
+  try {
+    await Winner.sync()
+    const winner = await Winner.findOne({ where: { id } })
+    if (winner) {
+      res.status(200).json({ winner })
+    } else {
+      res.status(404).json({ message: ERROR_TYPE.notFound })
+    }
+  } catch (error) {
+    httpError(error, res)
+  }
+}
 const createWinner = async (req, res) => {
-    const { name, time } = req.body;
+  const { name, time } = req.body
 
+  try {
+    await Winner.sync()
+    const winnerCreated = await Winner.create({ name, date: time })
 
-    try {
-        const query = "INSERT INTO winners (name, date) VALUES (?, ?)";
-        connection.query(
-            query,
-            [name, time],
-            (err, result) => {
-                if (err) {
-                    res.status(400).json({ error: err.message });
-                } else {
-                    res.status(201).json({result});
-                }
-            }
-        );
-  
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (winnerCreated) {
+      res.status(201).json({ message: 'Winner created successfully' })
     }
-};
+  } catch (error) {
+    httpError(error, res)
+  }
+}
 
+const uptadeWinner = async (req, res) => {
+  const { id } = req.params
 
-module.exports = { getWinners, createWinner };
+  const { name } = req.body
+
+  try {
+    await Winner.sync()
+    const winner = await Winner.findOne({ where: { id } })
+
+    if (winner) {
+      await Winner.update({ name }, {
+        where: { id }
+      })
+      res.status(200).json({ message: 'Winner updated successfully' })
+      return
+    }
+
+    res.status(404).json({ message: ERROR_TYPE.notFound })
+  } catch (error) {
+    httpError(error, res)
+  }
+}
+
+const delteWinner = async (req, res) => {
+  const { id } = req.params
+  try {
+    await Winner.sync()
+    const winner = await Winner.findOne({ where: { id } })
+    if (winner) {
+      await Winner.destroy({ where: { id } })
+      res.status(200).json({ message: 'Winner deleted successfully' })
+    }
+  } catch (error) {
+    httpError(error, res)
+  }
+}
+
+module.exports = { getWinners, createWinner, getWinner, uptadeWinner, delteWinner }
