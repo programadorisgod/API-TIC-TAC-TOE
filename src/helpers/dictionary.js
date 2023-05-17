@@ -1,3 +1,4 @@
 exports.ERROR_TYPE = Object.freeze({
-  notFound: 'id is malformed'
+  notFound: 'id is malformed',
+  badRequest: 'bad request'
 })

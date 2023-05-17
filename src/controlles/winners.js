@@ -28,14 +28,17 @@ const getWinner = async (req, res) => {
 }
 const createWinner = async (req, res) => {
   const { name, time } = req.body
-  console.log(name, time)
+
   try {
     await Winner.sync()
     const winnerCreated = await Winner.create({ name, date: time })
 
     if (winnerCreated) {
       res.status(201).json({ message: 'Winner created successfully' })
+      return
     }
+
+    res.status(400).json({ message: ERROR_TYPE.badRequest })
   } catch (error) {
     httpError(error, res)
   }
@@ -54,7 +57,7 @@ const uptadeWinner = async (req, res) => {
       await Winner.update({ name }, {
         where: { id }
       })
-      res.status(200).json({ message: 'Winner updated successfully' })
+      res.status(200).json([winner])
       return
     }
 
@@ -71,8 +74,10 @@ const delteWinner = async (req, res) => {
     const winner = await Winner.findOne({ where: { id } })
     if (winner) {
       await Winner.destroy({ where: { id } })
-      res.status(200).json({ message: 'Winner deleted successfully' })
+      res.status(200).json([winner])
+      return
     }
+    res.status(404).json({ message: ERROR_TYPE.notFound })
   } catch (error) {
     httpError(error, res)
   }
