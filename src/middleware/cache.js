@@ -3,7 +3,8 @@ const getExpeditiousCache = require('express-expeditious')
 // importamos redis, ya que sera nuestro alamacen de datos en memoria
 const redis = require('redis')
 // creamos el cliente de redis para poder usarlo en el motor de cache
-const cliente = redis.createClient({ port: 6379 })
+const cliente = redis.createClient()
+
 // creamos las opciones de cache
 const defaultOptions = {
   // key de la cache

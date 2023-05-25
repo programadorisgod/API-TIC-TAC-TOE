@@ -1,6 +1,6 @@
 
 const { getWinners, createWinner, getWinner, uptadeWinner, delteWinner } = require('../controlles/winners')
-const { cache } = require('../middleware/cache')
+const { CheckAuth } = require('../middleware/auth')
 const express = require('express')
 const router = express.Router()
 const path = '/api/winners'
@@ -66,9 +66,9 @@ const path = '/api/winners'
  *        description: Error del servidor
  */
 
-router.get(`${path}`, cache, getWinners)
-router.get(`${path}/:id`, cache, getWinner)
+router.get(`${path}`, CheckAuth, getWinners)
+router.get(`${path}/:id`, CheckAuth, getWinner)
 router.post(`${path}`, createWinner)
-router.patch(`${path}/:id`, uptadeWinner)
-router.delete(`${path}/:id`, delteWinner)
+router.patch(`${path}/:id`, CheckAuth, uptadeWinner)
+router.delete(`${path}/:id`, CheckAuth, delteWinner)
 module.exports = router
