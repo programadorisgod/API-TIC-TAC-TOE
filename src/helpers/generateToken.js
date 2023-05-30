@@ -4,6 +4,7 @@ const { JWT_KEY } = process.env
 const Sing = async () => {
   return jwt.sign(
     {
+
       foo: 'bar'
     },
     JWT_KEY,

@@ -17,6 +17,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(router)
 app.use(routerAuth)
 app.use(routerUser)
+
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto: ${PORT}`)
   swaggerDocs(app, PORT)

@@ -19,6 +19,7 @@
     "standard": "^17.0.0"
   },
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "expeditious-engine-redis": "^0.1.2",
     "jsonwebtoken": "^9.0.0",

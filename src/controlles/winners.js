@@ -32,7 +32,7 @@ const createWinner = async (req, res) => {
   try {
     await Winner.sync()
     const winnerCreated = await Winner.create({ name, date: time })
-
+    console.log(winnerCreated)
     if (winnerCreated) {
       res.status(201).json({ message: 'Winner created successfully' })
       return
