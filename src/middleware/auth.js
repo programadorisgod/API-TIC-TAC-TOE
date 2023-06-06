@@ -1,6 +1,7 @@
 
 const { ERROR_TYPE } = require('../helpers/dictionary')
 const { Verify } = require('../helpers/generateToken')
+const { verifyIdToken } = require('../helpers/verifyToken')
 
 const CheckAuth = async (req, res, next) => {
   try {
@@ -14,8 +15,9 @@ const CheckAuth = async (req, res, next) => {
     }
     // ahora verificamos el token
     const tokenData = await Verify(token)
+    const idToken = await verifyIdToken(token)
 
-    if (tokenData.foo) {
+    if (tokenData || idToken) {
       next()
     }
   } catch (error) {

@@ -19,7 +19,7 @@ const getUser = async (req, res) => {
   }
 }
 
-const createUserx = async (req, res) => {
+const createUser = async (req, res) => {
   const { username, password, email } = req.body
   console.log(req.body)
   try {
@@ -38,4 +38,4 @@ const createUserx = async (req, res) => {
   }
 }
 
-module.exports = { getUser, createUserx }
+module.exports = { getUser, createUser }
