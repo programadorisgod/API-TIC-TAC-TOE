@@ -23,9 +23,9 @@
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "expeditious-engine-redis": "^0.1.2",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.3.1",
-    "sequelize": "^6.31.1",
+    "sequelize": "^6.33.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3"
   },
